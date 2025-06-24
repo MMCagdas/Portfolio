@@ -9,567 +9,1032 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            .modal-close {
-                top: -40px;
-                font-size: 30px;
-                width: 45px;
-                height: 45px;
-            }
-
-            .modal-title {
-                font-size: 1rem;
-                bottom: -50px;
-                padding: 12px;
-            }
-
-            .modal-content {
-                max-width: 95%;
-                max-height: 80%;
-            }
         }
-
+        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
             min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
         }
-
+        
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 20%; animation-delay: 1s; }
+        .particle:nth-child(3) { left: 30%; animation-delay: 2s; }
+        .particle:nth-child(4) { left: 40%; animation-delay: 3s; }
+        .particle:nth-child(5) { left: 50%; animation-delay: 4s; }
+        .particle:nth-child(6) { left: 60%; animation-delay: 0.5s; }
+        .particle:nth-child(7) { left: 70%; animation-delay: 1.5s; }
+        .particle:nth-child(8) { left: 80%; animation-delay: 2.5s; }
+        .particle:nth-child(9) { left: 90%; animation-delay: 3.5s; }
+        .particle:nth-child(10) { left: 15%; animation-delay: 5s; }
+        
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+            position: relative;
+            z-index: 10;
         }
-
-        .portfolio-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            animation: slideUp 0.8s ease-out;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
+        
         .header {
-            background: linear-gradient(135deg, #2c3e50, #3498db);
-            color: white;
-            padding: 60px 40px;
             text-align: center;
+            padding: 60px 0;
+            color: white;
+            position: relative;
+            perspective: 1000px;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            margin: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+            transform-style: preserve-3d;
+        }
+        
+        .name {
+            font-size: 3.5rem;
+            font-weight: 300;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: slideInRotate 1.5s ease-out;
+            background: linear-gradient(45deg, #ffffff, #f0f8ff, #ffffff);
+            background-size: 200% 200%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: slideInRotate 1.5s ease-out, textShine 3s ease-in-out infinite;
+        }
+        
+        .title {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+            animation: typewriter 2s steps(30) 0.5s both;
+            border-right: 3px solid rgba(255, 255, 255, 0.7);
+            white-space: nowrap;
+            overflow: hidden;
+            width: fit-content;
+            margin: 20px auto;
+        }
+        
+        .nav {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+            animation: fadeInUp 1s ease-out 1s both;
+        }
+        
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 1rem;
+            backdrop-filter: blur(10px);
             position: relative;
             overflow: hidden;
+            transform: translateY(0);
         }
-
-        .header::before {
+        
+        .nav-btn::before {
             content: '';
             position: absolute;
             top: -50%;
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            animation: rotate 20s linear infinite;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s;
+            opacity: 0;
         }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        
+        .nav-btn:hover::before {
+            animation: shine 0.6s ease-in-out;
         }
-
-        .header-content {
-            position: relative;
-            z-index: 2;
+        
+        .nav-btn:hover, .nav-btn.active {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
         }
-
-        .name {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        
+        .nav-btn:active {
+            transform: translateY(-5px) scale(1.02);
         }
-
-        .title {
-            font-size: 1.3rem;
-            font-weight: 300;
-            opacity: 0.9;
-            margin-bottom: 30px;
-        }
-
+        
         .content {
-            padding: 50px 40px;
+            margin-top: 50px;
         }
-
+        
         .section {
-            margin-bottom: 50px;
+            display: none;
+            animation: sectionSlide 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
-        .section h2 {
-            font-size: 2rem;
+        
+        .section.active {
+            display: block;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 50px;
             margin-bottom: 30px;
-            color: #2c3e50;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.15);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
-            padding-bottom: 10px;
+            overflow: hidden;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: cardAppear 0.8s ease-out 0.2s forwards;
         }
-
-        .section h2::after {
+        
+        .card::before {
             content: '';
             position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 50px;
-            height: 3px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 2px;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s;
+            opacity: 0;
         }
-
+        
+        .card:hover::before {
+            animation: cardShine 1s ease-in-out;
+        }
+        
+        .card:hover {
+            transform: translateY(-15px) rotateX(5deg);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.25);
+        }
+        
         .about-text {
-            font-size: 1.1rem;
+            font-size: 1.3rem;
             line-height: 1.8;
-            color: #555;
-            text-align: justify;
+            color: #333;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            animation: textReveal 1s ease-out 0.5s both;
         }
-
+        
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 40px;
             margin-top: 30px;
         }
-
+        
         .project-card {
-            background: white;
-            border-radius: 15px;
-            padding: 0;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            border: 1px solid #e0e0e0;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
             overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            transform: translateY(50px) rotateY(10deg);
+            opacity: 0;
+            animation: projectCardAppear 0.8s ease-out forwards;
         }
-
-        .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-        }
-
-        .project-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-bottom: 1px solid #e0e0e0;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .project-image:hover {
-            opacity: 0.9;
-            transform: scale(1.02);
-        }
-
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
+        
+        .project-card:nth-child(1) { animation-delay: 0.2s; }
+        .project-card:nth-child(2) { animation-delay: 0.4s; }
+        .project-card:nth-child(3) { animation-delay: 0.6s; }
+        
+        .project-card::before {
+            content: '';
+            position: absolute;
             top: 0;
+            left: -100%;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            animation: fadeIn 0.3s ease;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.6s;
+            z-index: 1;
         }
-
-        .modal.show {
+        
+        .project-card:hover::before {
+            left: 100%;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-20px) rotateY(0deg) scale(1.02);
+            box-shadow: 0 35px 70px rgba(0,0,0,0.25);
+        }
+        
+        .project-image {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        .modal-content {
+            cursor: pointer;
+            transition: all 0.4s ease;
             position: relative;
+            overflow: hidden;
+        }
+        
+        .project-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(102, 126, 234, 0.1);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .project-image:hover::after {
+            opacity: 1;
+        }
+        
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.4s ease;
+        }
+        
+        .project-image:hover img {
+            transform: scale(1.15) rotate(2deg);
+        }
+        
+        .project-content {
+            padding: 30px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .project-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            transition: color 0.3s ease;
+        }
+        
+        .project-card:hover .project-title {
+            color: #667eea;
+        }
+        
+        .project-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            transition: color 0.3s ease;
+        }
+        
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            padding: 10px 20px;
+            border-radius: 25px;
+            background: rgba(102, 126, 234, 0.1);
+        }
+        
+        .project-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .project-link:hover::before {
+            left: 100%;
+        }
+        
+        .project-link:hover {
+            color: #764ba2;
+            transform: translateX(5px);
+            background: rgba(102, 126, 234, 0.2);
+        }
+        
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .link-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+            transform: translateX(-50px);
+            opacity: 0;
+            animation: linkCardSlide 0.8s ease-out forwards;
+        }
+        
+        .link-card:nth-child(1) { animation-delay: 0.2s; }
+        .link-card:nth-child(2) { animation-delay: 0.4s; }
+        
+        .link-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+            transition: left 0.6s;
+        }
+        
+        .link-card:hover::before {
+            left: 100%;
+        }
+        
+        .link-card:hover {
+            transform: translateX(15px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            color: #667eea;
+        }
+        
+        .link-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+            transition: transform 0.3s ease;
+        }
+        
+        .link-card:hover .link-icon {
+            transform: scale(1.1) rotate(10deg);
+        }
+        
+        .linkedin-icon {
+            background: linear-gradient(135deg, #0077B5, #005885);
+        }
+        
+        .github-icon {
+            background: linear-gradient(135deg, #333, #000);
+        }
+        
+        .cv-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 40px auto;
+            text-decoration: none;
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cv-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s;
+            opacity: 0;
+        }
+        
+        .cv-btn:hover::before {
+            animation: shine 0.6s ease-in-out;
+        }
+        
+        .cv-btn:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 25px 50px rgba(102, 126, 234, 0.6);
+            background: linear-gradient(135deg, #764ba2, #667eea);
+        }
+        
+        .cv-btn:active {
+            transform: translateY(-5px) scale(1.02);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+            animation: modalFadeIn 0.3s ease-out;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
             max-width: 90%;
             max-height: 90%;
-            margin: auto;
-            animation: zoomIn 0.3s ease;
+            position: relative;
+            animation: modalZoom 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
-        .modal-image {
+        
+        .modal-content img {
             width: 100%;
             height: auto;
-            border-radius: 10px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.5);
         }
-
+        
         .modal-close {
             position: absolute;
             top: -50px;
             right: 0;
             color: white;
-            font-size: 35px;
-            font-weight: bold;
+            font-size: 2rem;
             cursor: pointer;
-            padding: 10px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
+            background: rgba(0, 0, 0, 0.7);
             width: 50px;
             height: 50px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        .modal-close:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.1);
-        }
-
-        .modal-title {
-            position: absolute;
-            bottom: -60px;
-            left: 0;
-            right: 0;
-            color: white;
-            text-align: center;
-            font-size: 1.2rem;
-            font-weight: 600;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 15px;
-            border-radius: 10px;
+            transition: all 0.3s ease;
             backdrop-filter: blur(10px);
         }
-
-        @keyframes fadeIn {
+        
+        .modal-close:hover {
+            background: rgba(255, 0, 0, 0.7);
+            transform: scale(1.1);
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) translateX(0px) rotate(0deg); opacity: 0.6; }
+            25% { transform: translateY(-20px) translateX(10px) rotate(90deg); opacity: 1; }
+            50% { transform: translateY(-40px) translateX(-10px) rotate(180deg); opacity: 0.8; }
+            75% { transform: translateY(-20px) translateX(5px) rotate(270deg); opacity: 1; }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.1; }
+            50% { transform: scale(1.02); opacity: 0.15; }
+        }
+        
+        @keyframes slideInRotate {
+            0% {
+                opacity: 0;
+                transform: translateY(-100px) rotateX(90deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) rotateX(0deg);
+            }
+        }
+        
+        @keyframes textShine {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        @keyframes typewriter {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes shine {
+            0% { opacity: 0; transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            50% { opacity: 1; }
+            100% { opacity: 0; transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        @keyframes sectionSlide {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes cardAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes cardShine {
+            0% { opacity: 0; transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            50% { opacity: 1; }
+            100% { opacity: 0; transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        @keyframes textReveal {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes projectCardAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0) rotateY(0deg);
+            }
+        }
+        
+        @keyframes linkCardSlide {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes modalFadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
-
-        @keyframes zoomIn {
-            from { 
+        
+        @keyframes modalZoom {
+            from {
                 opacity: 0;
-                transform: scale(0.8);
+                transform: scale(0.5);
             }
-            to { 
+            to {
                 opacity: 1;
                 transform: scale(1);
             }
         }
-
-        .project-content {
-            padding: 25px;
-        }
-
-        .project-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 15px;
-        }
-
-        .project-description {
-            color: #666;
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-
-        .project-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: #3498db;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .project-link:hover {
-            color: #2980b9;
-        }
-
-        .project-link::after {
-            content: '→';
-            transition: transform 0.3s ease;
-        }
-
-        .project-link:hover::after {
-            transform: translateX(5px);
-        }
-
-        .links-container {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .link-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 15px 25px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
-        }
-
-        .link-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-        }
-
-        .cv-download {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            padding: 15px 30px;
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
-            margin-bottom: 30px;
-        }
-
-        .cv-download:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4);
-        }
-
-        .cv-icon {
-            width: 24px;
-            height: 24px;
-            fill: currentColor;
-        }
-
-        .link-icon {
-            width: 20px;
-            height: 20px;
-            fill: currentColor;
-        }
-
-        /* Responsive Design */
+        
         @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-
-            .header {
-                padding: 40px 20px;
-            }
-
             .name {
-                font-size: 2.2rem;
+                font-size: 2.5rem;
             }
-
-            .title {
-                font-size: 1.1rem;
+            
+            .nav {
+                flex-wrap: wrap;
+                gap: 15px;
             }
-
-            .content {
-                padding: 30px 20px;
+            
+            .nav-btn {
+                padding: 12px 24px;
+                font-size: 0.9rem;
             }
-
-            .section h2 {
-                font-size: 1.6rem;
-            }
-
+            
             .projects-grid {
                 grid-template-columns: 1fr;
+                gap: 25px;
+            }
+            
+            .card {
+                padding: 35px;
+            }
+            
+            .about-text {
+                font-size: 1.1rem;
+            }
+            
+            .link-card {
+                flex-direction: column;
+                text-align: center;
                 gap: 20px;
             }
-
-            .project-content {
-                padding: 20px;
-            }
-
-            .cv-download {
-                width: 100%;
-                max-width: 300px;
-                justify-content: center;
-                margin: 0 auto 30px;
-            }
-
-            .links-container {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .link-item {
-                width: 100%;
-                max-width: 300px;
-                justify-content: center;
-            }
         }
-
+        
         @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .header {
+                padding: 40px 0;
+            }
+            
             .name {
-                font-size: 1.8rem;
+                font-size: 2rem;
             }
-
-            .title {
-                font-size: 1rem;
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
             }
-
-            .about-text {
-                font-size: 1rem;
+            
+            .project-card {
+                margin-bottom: 20px;
             }
-
-            .section h2 {
-                font-size: 1.4rem;
+            
+            .card {
+                padding: 25px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="portfolio-card">
-            <header class="header">
-                <div class="header-content">
-                    <h1 class="name">Mustafa Çağdaş Musara</h1>
-                    <p class="title">Elektrik-Elektronik Mühendisi</p>
-                </div>
-            </header>
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
 
-            <main class="content">
-                <section class="section">
-                    <h2>Hakkımda</h2>
-                    <a href="https://raw.githubusercontent.com/MMCagdas/Portfolio/main/cv.pdf" class="cv-download" target="_blank" rel="noopener noreferrer" download>
-                        <svg class="cv-icon" viewBox="0 0 24 24">
-                            <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
-                        </svg>
-                        CV'mi İndir
-                    </a>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1 class="name">Mustafa Çağdaş Musara</h1>
+                <p class="title">Elektrik-Elektronik Mühendisi</p>
+                <nav class="nav">
+                    <button class="nav-btn active" onclick="showSection('about')">Hakkımda</button>
+                    <button class="nav-btn" onclick="showSection('projects')">Projeler</button>
+                    <button class="nav-btn" onclick="showSection('contact')">Bağlantılar</button>
+                </nav>
+            </div>
+        </header>
+
+        <main class="content">
+            <section id="about" class="section active">
+                <div class="card">
                     <p class="about-text">
                         Güvenilir, hızlı adapte olabilen, hızlı öğrenen ve öğrenmeye istekli bir kişiyim. 
                         Frontend, backend ve oyun geliştirme alanlarında başlangıç seviyesinde projeler geliştirdim. 
-                        Teknolojiye olan tutkum ve sürekli gelişim odaklı yaklaşımımla, yazılım geliştirme 
-                        alanında kariyerimi ilerletmeyi hedefliyorum.
+                        Teknolojiye olan tutkum ve sürekli gelişme hedefimle yazılım dünyasında kendimi 
+                        kanıtlamaya hazırım.
                     </p>
-                </section>
+                    <a href="https://github.com/MMCagdas/Portfolio/raw/main/cv.pdf" class="cv-btn" target="_blank">
+                        <span>📄</span>
+                        CV İndir
+                    </a>
+                </div>
+            </section>
 
-                <section class="section">
-                    <h2>Projeler</h2>
-                    <div class="projects-grid">
-                        <div class="project-card">
-                            <img src="https://raw.githubusercontent.com/MMCagdas/Portfolio/main/auth.png" 
-                                 alt="User Authentication System" 
-                                 class="project-image" 
-                                 loading="lazy"
-                                 onclick="openModal(this, 'User Authentication System')">
-                            <div class="project-content">
-                                <h3 class="project-title">User Authentication System</h3>
-                                <p class="project-description">
-                                    Backend, JWT ve PostgreSQL tabanlı kullanıcı giriş sistemi. 
-                                    Güvenli authentication ve authorization özellikleri içeren modern bir web uygulaması.
-                                </p>
-                                <a href="https://github.com/MMCagdas/Authentication.git" class="project-link" target="_blank" rel="noopener noreferrer">
-                                    GitHub'da Görüntüle
-                                </a>
-                            </div>
+            <section id="projects" class="section">
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-image" onclick="openModal('https://github.com/MMCagdas/Portfolio/raw/main/auth.png')">
+                            <img src="https://github.com/MMCagdas/Portfolio/raw/main/auth.png" alt="User Authentication System" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;color:#666;font-size:1.5rem;\'>🔐 Auth System</div>'">
                         </div>
-
-                        <div class="project-card">
-                            <img src="https://raw.githubusercontent.com/MMCagdas/Portfolio/main/blackjack.png" 
-                                 alt="Blackjack Game" 
-                                 class="project-image" 
-                                 loading="lazy"
-                                 onclick="openModal(this, 'Blackjack Game')">
-                            <div class="project-content">
-                                <h3 class="project-title">Blackjack</h3>
-                                <p class="project-description">
-                                    HTML, CSS ve JavaScript ile yapılmış basit bir blackjack oyunu. 
-                                    Temel oyun mekaniği ve kullanıcı dostu arayüz ile geliştirilmiştir.
-                                </p>
-                                <a href="https://github.com/MMCagdas/Blackjack.git" class="project-link" target="_blank" rel="noopener noreferrer">
-                                    GitHub'da Görüntüle
-                                </a>
-                            </div>
+                        <div class="project-content">
+                            <h3 class="project-title">User Authentication System</h3>
+                            <p class="project-description">
+                                Backend, JWT ve PostgreSQL tabanlı kullanıcı giriş sistemi. 
+                                Güvenli kimlik doğrulama ve yetkilendirme özellikleri içerir.
+                            </p>
+                            <a href="https://github.com/MMCagdas/Authentication.git" class="project-link" target="_blank">
+                                <span>🔗</span>
+                                GitHub'da Görüntüle
+                            </a>
                         </div>
                     </div>
-                </section>
 
-                <section class="section">
-                    <h2>Bağlantılar</h2>
-                    <div class="links-container">
-                        <a href="https://www.linkedin.com/in/mcmusara" class="link-item" target="_blank" rel="noopener noreferrer">
-                            <svg class="link-icon" viewBox="0 0 24 24">
-                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                            </svg>
-                            LinkedIn
-                        </a>
-                        <a href="https://github.com/MMCagdas" class="link-item" target="_blank" rel="noopener noreferrer">
-                            <svg class="link-icon" viewBox="0 0 24 24">
-                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                            </svg>
-                            GitHub
-                        </a>
+                    <div class="project-card">
+                        <div class="project-image" onclick="openModal('https://github.com/MMCagdas/Portfolio/raw/main/blackjack.png')">
+                            <img src="https://github.com/MMCagdas/Portfolio/raw/main/blackjack.png" alt="Blackjack Game" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;color:#666;font-size:1.5rem;\'>🃏 Blackjack</div>'">
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">Blackjack</h3>
+                            <p class="project-description">
+                                HTML, CSS ve JavaScript ile yapılmış basit bir blackjack oyunu. 
+                                Temel oyun mekaniği ve kullanıcı etkileşimi içerir.
+                            </p>
+                            <a href="https://github.com/MMCagdas/Blackjack.git" class="project-link" target="_blank">
+                                <span>🔗</span>
+                                GitHub'da Görüntüle
+                            </a>
+                        </div>
                     </div>
-                </section>
-            </main>
-        </div>
+                </div>
+            </section>
+
+            <section id="contact" class="section">
+                <div class="links-container">
+                    <a href="https://www.linkedin.com/in/mcmusara" class="link-card" target="_blank">
+                        <div class="link-icon linkedin-icon">💼</div>
+                        <div>
+                            <h3>LinkedIn</h3>
+                            <p>Profesyonel ağım ve iş deneyimim</p>
+                        </div>
+                    </a>
+                    
+                    <a href="https://github.com/MMCagdas" class="link-card" target="_blank">
+                        <div class="link-icon github-icon">⚡</div>
+                        <div>
+                            <h3>GitHub</h3>
+                            <p>Kod projelerim ve açık kaynak katkılarım</p>
+                        </div>
+                    </a>
+                </div>
+            </section>
+        </main>
     </div>
 
-    <!-- Modal for Image Preview -->
-    <div id="imageModal" class="modal">
+    <div class="modal" id="imageModal">
         <div class="modal-content">
             <span class="modal-close" onclick="closeModal()">&times;</span>
-            <img id="modalImage" class="modal-image" src="" alt="">
-            <div id="modalTitle" class="modal-title"></div>
+            <img id="modalImage" src="" alt="Project Image">
         </div>
     </div>
 
     <script>
-        function openModal(img, title) {
-            const modal = document.getElementById('imageModal');
-            const modalImg = document.getElementById('modalImage');
-            const modalTitle = document.getElementById('modalTitle');
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
             
-            modal.classList.add('show');
-            modalImg.src = img.src;
-            modalImg.alt = img.alt;
-            modalTitle.textContent = title;
+            // Remove active class from all nav buttons
+            const navBtns = document.querySelectorAll('.nav-btn');
+            navBtns.forEach(btn => {
+                btn.classList.remove('active');
+            });
             
-            // Prevent body scroll when modal is open
-            document.body.style.overflow = 'hidden';
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+            
+            // Reset animations for the new section
+            resetSectionAnimations(sectionId);
         }
-
+        
+        function resetSectionAnimations(sectionId) {
+            const section = document.getElementById(sectionId);
+            
+            if (sectionId === 'projects') {
+                const projectCards = section.querySelectorAll('.project-card');
+                projectCards.forEach((card, index) => {
+                    card.style.animation = 'none';
+                    card.offsetHeight; // Trigger reflow
+                    card.style.animation = `projectCardAppear 0.8s ease-out ${0.2 + index * 0.2}s forwards`;
+                });
+            }
+            
+            if (sectionId === 'contact') {
+                const linkCards = section.querySelectorAll('.link-card');
+                linkCards.forEach((card, index) => {
+                    card.style.animation = 'none';
+                    card.offsetHeight; // Trigger reflow
+                    card.style.animation = `linkCardSlide 0.8s ease-out ${0.2 + index * 0.2}s forwards`;
+                });
+            }
+            
+            if (sectionId === 'about') {
+                const card = section.querySelector('.card');
+                const text = section.querySelector('.about-text');
+                card.style.animation = 'none';
+                text.style.animation = 'none';
+                card.offsetHeight; // Trigger reflow
+                text.offsetHeight; // Trigger reflow
+                card.style.animation = 'cardAppear 0.8s ease-out 0.2s forwards';
+                text.style.animation = 'textReveal 1s ease-out 0.5s both';
+            }
+        }
+        
+        function openModal(imageSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            
+            modalImage.src = imageSrc;
+            modal.classList.add('active');
+            
+            // Add zoom effect to modal content
+            const modalContent = modal.querySelector('.modal-content');
+            modalContent.style.transform = 'scale(0.8)';
+            setTimeout(() => {
+                modalContent.style.transform = 'scale(1)';
+            }, 10);
+        }
+        
         function closeModal() {
             const modal = document.getElementById('imageModal');
-            modal.classList.remove('show');
+            const modalContent = modal.querySelector('.modal-content');
             
-            // Restore body scroll
-            document.body.style.overflow = 'auto';
+            modalContent.style.transform = 'scale(0.8)';
+            setTimeout(() => {
+                modal.classList.remove('active');
+            }, 200);
         }
-
+        
         // Close modal when clicking outside the image
         document.getElementById('imageModal').addEventListener('click', function(e) {
             if (e.target === this) {
                 closeModal();
             }
         });
-
+        
         // Close modal with Escape key
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 closeModal();
             }
+        });
+        
+        // Enhanced scroll-triggered animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card, .project-card, .link-card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                        
+                        // Add staggered animation for child elements
+                        const children = entry.target.querySelectorAll('h3, p, a, .project-title, .project-description, .project-link');
+                        children.forEach((child, index) => {
+                            child.style.opacity = '0';
+                            child.style.transform = 'translateY(20px)';
+                            child.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                            setTimeout(() => {
+                                child.style.opacity = '1';
+                                child.style.transform = 'translateY(0)';
+                            }, index * 100);
+                        });
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+            
+            cards.forEach(card => {
+                observer.observe(card);
+            });
+            
+            // Add mouse movement parallax effect
+            document.addEventListener('mousemove', (e) => {
+                const mouseX = e.clientX / window.innerWidth;
+                const mouseY = e.clientY / window.innerHeight;
+                
+                const particles = document.querySelectorAll('.particle');
+                particles.forEach((particle, index) => {
+                    const speed = (index + 1) * 0.5;
+                    const x = (mouseX - 0.5) * speed;
+                    const y = (mouseY - 0.5) * speed;
+                    particle.style.transform += ` translate(${x}px, ${y}px)`;
+                });
+                
+                // Parallax effect on cards
+                const cards = document.querySelectorAll('.card, .project-card');
+                cards.forEach((card, index) => {
+                    const speed = 0.02 + (index * 0.01);
+                    const x = (mouseX - 0.5) * speed * 10;
+                    const y = (mouseY - 0.5) * speed * 10;
+                    card.style.transform += ` translate(${x}px, ${y}px)`;
+                });
+            });
+            
+            // Add typing effect to title after page load
+            setTimeout(() => {
+                const title = document.querySelector('.title');
+                title.style.borderRight = 'none';
+            }, 3000);
+            
+            // Add random floating animation to particles
+            setInterval(() => {
+                const particles = document.querySelectorAll('.particle');
+                particles.forEach(particle => {
+                    const randomX = Math.random() * 10 - 5;
+                    const randomY = Math.random() * 10 - 5;
+                    particle.style.transform += ` translate(${randomX}px, ${randomY}px)`;
+                });
+            }, 2000);
+            
+            // Add click ripple effect
+            document.addEventListener('click', (e) => {
+                const ripple = document.createElement('div');
+                ripple.style.position = 'fixed';
+                ripple.style.left = e.clientX + 'px';
+                ripple.style.top = e.clientY + 'px';
+                ripple.style.width = '0px';
+                ripple.style.height = '0px';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(255, 255, 255, 0.5)';
+                ripple.style.transform = 'translate(-50%, -50%)';
+                ripple.style.pointerEvents = 'none';
+                ripple.style.zIndex = '9999';
+                ripple.style.transition = 'width 0.6s ease, height 0.6s ease, opacity 0.6s ease';
+                
+                document.body.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.style.width = '100px';
+                    ripple.style.height = '100px';
+                    ripple.style.opacity = '0';
+                }, 10);
+                
+                setTimeout(() => {
+                    document.body.removeChild(ripple);
+                }, 600);
+            });
         });
     </script>
 </body>
